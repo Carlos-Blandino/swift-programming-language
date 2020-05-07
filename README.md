@@ -1,2 +1,2 @@
-# swift-programming-language
-Swift Programming Language
+# Swift Programming Language
+Going through the manual
