@@ -67,6 +67,71 @@ let dodgersHomeCity = "Los Angeles"
 
 //:## Working with Characters
 
+//access characters in a string
+for character in myMutableString {
+    print(character, terminator:".")
+}
 
+//string construction from an array of characters
+var bestBootCampCharacters: [Character] = ["L","a","m","b","d","a"]
+var schoolString = String(bestBootCampCharacters)
+
+print(schoolString)
+
+//:## Concatenating Strings and Characters
+var string2 = " School"
+
+schoolString += string2
+
+let exclamation: Character = "!"
+
+print(schoolString + " is hard")
+
+schoolString += " is hard"
+
+schoolString.append(exclamation)
+
+print(schoolString)
+
+//to properly concatinate these you need an extra space on last line
+//that way there will be a line break in code
+var multiline1 = """
+Monday
+Tuesday
+
+"""
+var multiline2 = """
+Wednesday
+Thursday
+Friday
+"""
+
+let resultingStr = multiline1 + multiline2
+
+print(resultingStr)
+
+//:## String Interpolation
+
+let pi = 3.1415
+
+print("\(pi) does not change")
+
+//use extended string delimiters to show the value within the delimiters
+print(#"\(pi) does not change"#)
+
+//:## Counting Characters
+
+var resultCount = mySampleDelimitedStr.count
+print(resultCount)
+
+print(schoolString.count)
+schoolString += japaneseYen
+print(schoolString.count)
+
+var myWord = "resume"
+myWord += "\u{301}"
+print(myWord)
+//string's character count not affected in this instance
+print(myWord.count)
 
 
