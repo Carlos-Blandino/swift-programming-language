@@ -102,3 +102,135 @@ print((1,"people") < (2, "peoples"))
  tuples with fewer than seven elements. For <=seven elements, you must
  implement the comparison operators yourself
  */
+
+//:## Ternary Conditional Operator
+
+//this operator is a shortcut for evaluating one of
+//two expressions based on whether question is true or false
+//such as in an if else statement
+
+/*:
+ if question {
+    statement 1
+ } else {
+    statement 2
+ }
+ */
+let imHungry = true
+
+let myMeal = imHungry ? "Hamburger, fries and chocolate shake" : "water"
+print("I am having \(myMeal)")
+
+//:## Nil-Coalescing Operator
+
+/*:
+ (a ?? b)  is used for unwrapping a, if nil then choose option b which needs to be of the
+ same type that is stored in a, thus you don't need to use a ternary */
+
+var password: String? //defaults to nil if set to var
+
+let user = password ?? "Guest"
+
+print("The user that is logged in is \(user)")
+
+//:## Range Operators
+
+//:### Closed Range Operator (a...b)
+for index in 1...12 {
+    print("2 x \(index) = \(index * 2)")
+}
+//:### Half-Open Range Operator (a..<b)
+//used in particular with zero-based lists like arrays
+//contiains its first value but not its second value
+
+let animals = ["Dog","Cat","Horse","Cow","Mouse"]
+let arrayCount = animals.count
+
+for index in 0..<arrayCount {
+    print("Animal \(index + 1) is a \(animals[index])")
+}
+//:### One-Sided Ranges
+
+for animal in animals[...3] {
+    print(animal)
+}
+for animal in animals[2...]{
+    print(animal)
+}
+for animal in animals[..<2] {
+    print(animal)
+}
+let range1 = ...5
+let range2 = ..<5
+let range3 = 0...5
+
+print(range1.contains(5))
+print(range1.contains(-4))
+print(range1.contains(6))
+print(range2.contains(5))
+print(range3.contains(5))
+print(range3.contains(0))
+
+for index in 0... {
+    print(index)
+    if index == 10{
+        break
+    }
+}
+
+//:## Logical Operators
+
+/*:
+ Logical NOT (!a)
+ Logical AND (a && b)
+ Logical OR (a || b)
+ */
+
+//:### Logical NOT Operator (inverts a Boolean value)
+
+let continueIn = false
+if !continueIn {
+    print("You are not permitted inside, please try later")
+}
+// if not continue in , we are looking for a false to continue
+//to the first if statement
+
+//:### Logical AND Operator (both values must me true)
+
+/*:
+ (a && b) both values must be true, if the first is false the evaluation short-circuits, stops evaluating and the final condition is false
+ */
+let enteredFirstPassword = true
+let enteredSecondPassword = false
+
+if enteredFirstPassword && enteredSecondPassword {
+    print("You are at Home screen")
+} else {
+    print("Try use all entry parameters")
+}
+
+//:### Logical OR Operator (only one value must be true)
+
+/*:
+ (a || b) this also perfoms a short-circuit evaluation like the Logical && operator
+ */
+
+
+if enteredFirstPassword || enteredSecondPassword {
+    print("You are at Home screen")
+} else {
+    print("Try use all entry parameters")
+}
+
+//:### Combining Logical Operators
+
+let age = 19
+let country = "USA"
+let parentalConsent = true
+
+if age >= 18 && country == "USA" || age < 18 && age  > 15 && parentalConsent {
+    print("You are free to enlist in the US Army")
+} else {
+    print("You are too young")
+}
+//use parenthese to make intent explicit
