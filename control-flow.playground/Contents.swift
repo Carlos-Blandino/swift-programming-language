@@ -276,3 +276,24 @@ print("end of while")
 
 //guard statement used for optional binding
 
+func person(person: [String: String]){
+    guard let name = person["name"] else {
+        return
+    }
+    print("Hello \(name)")
+    
+    guard let age = person["age"] else {
+        print("I hope its not your birthday")
+        return
+    }
+    print("You are lucky to be \(age) years old")
+    
+    guard let city = person["city"] else {
+        print("I hope its nice wher you live")
+        return
+    }
+    print("\(String(describing: city)) is nice no matter the season")
+}
+
+person(person: ["name": "Carlos","city":"LA"])
+
