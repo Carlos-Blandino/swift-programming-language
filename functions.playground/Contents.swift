@@ -10,7 +10,6 @@ import UIKit
 //(ending code block brace)
 //}
 
-
 //the following function has multiple parameters
 //when calling the function you pass the actual variables
 //they are then called arguments
@@ -72,7 +71,6 @@ func getName(person: String) -> String {
 
 func someFunctionName(firstArgumentLabel firstParameterName: String, secondArgumentLabel secondParameterName: String) {
     //in the function use the parameter names only to refer to the arguments
-    
 }
 
 //:### Omitting Argument Labels

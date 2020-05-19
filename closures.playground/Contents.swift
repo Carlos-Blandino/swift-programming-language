@@ -121,3 +121,95 @@ incrementByTwo()
 // returns a value of 8
 
 
+//:## Escaping Closures
+
+/*:
+ A closure is said to escape a function when the closure is passed as an argument
+ to the function, but is called after the function returns. Need to write @escaping before
+ the prameter type
+ 
+ used in comletion handler
+ 
+ its executed in the future, outliving the function that it was created in
+ 
+ used in  asynchronous programming
+ */
+var completionHandlers: [() -> Void] = []
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
+}
+func someFunctionWithNonescapingClosure(closure: () -> Void) {
+    closure()
+}
+
+class SomeClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure { self.x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+}
+//escaping closure needs to refer to self explicitly
+
+let instance = SomeClass()
+instance.doSomething()
+print(instance.x)
+// Prints "200"
+
+completionHandlers.first?()
+print(instance.x)
+// Prints "100"
+
+//:## Autoclosures
+
+/*:
+ An autoclosure is a closure that is automatically created to wrap an expression that’s being passed as an argument to a function. It doesn’t take any arguments, and when it’s called, it returns the value of the expression that’s wrapped inside of it. This syntactic convenience lets you omit braces around a function’s parameter by writing a normal expression instead of an explicit closure.
+ */
+
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count)
+// Prints "5"
+
+let customerProvider = { customersInLine.remove(at: 0) }
+print(customersInLine.count)
+// Prints "5"
+
+print("Now serving \(customerProvider())!")
+// Prints "Now serving Chris!"
+print(customersInLine.count)
+// Prints "4"
+
+//You get the same behavior of delayed evaluation when you pass a closure as an argument to a function.
+
+// customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serve(customer: { customersInLine.remove(at: 0) } )
+// Prints "Now serving Alex!"
+
+//an autoclosure by marking its parameter’s type with the @autoclosure attribute. - argument is automatically converted to a closure
+
+// customersInLine is ["Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: @autoclosure () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serve(customer: customersInLine.remove(at: 0))
+// Prints "Now serving Ewa!"
+
+//If you want an autoclosure that is allowed to escape, use both the @autoclosure and @escaping attributes.
+// customersInLine is ["Barry", "Daniella"]
+var customerProviders: [() -> String] = []
+func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customersInLine.remove(at: 0))
+collectCustomerProviders(customersInLine.remove(at: 0))
+
+print("Collected \(customerProviders.count) closures.")
+// Prints "Collected 2 closures."
+for customerProvider in customerProviders {
+    print("Now serving \(customerProvider())!")
+}
+// Prints "Now serving Barry!"
+// Prints "Now serving Daniella!"

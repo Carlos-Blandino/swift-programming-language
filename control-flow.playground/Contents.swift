@@ -64,9 +64,7 @@ while countDown > 0 {
    
     if countDown == 0 {
         print("Blast Off")
-        
     }
-    
 }
 countDown = 10
 repeat {
@@ -88,7 +86,6 @@ var choosenColor = "red"
 if choosenColor == "red" {
     print(choosenColor)
 }
-
 
 choosenColor = "blue"
 if choosenColor == "red" {
@@ -245,7 +242,6 @@ case "yellow":
 default:
     print("The choosen color is not a primary color")
 }
-
 
 //:### Labeled Statements
 
