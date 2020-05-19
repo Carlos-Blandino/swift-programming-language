@@ -1,6 +1,6 @@
 import UIKit
 
-//:# Closures
+//:# 😎Closures
 
 /*:
  Closures are self-contained blocks of code that can be shared through out your code
@@ -11,15 +11,16 @@ import UIKit
  Closure expressions are unnamed closures written in a lightweight syntax that can capture values from their surrounding context.
  */
 
-//:## Closure Expressions
+//:## 😎Closure Expressions
 
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+//closure - global closure (a typical function)
 func backward(_ s1: String, _ s2: String) -> Bool {
     return s1 > s2
 }
 var reverseNames = names.sorted(by: backward(_:_:))
 
-//:### Closure Expression Syntax
+//:### 😎Closure Expression Syntax
 //parameters can not have default values
 //variadic, inout, and tuples are okay
 /*:
@@ -32,23 +33,24 @@ reverseNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 
-//:### Inferring Type From Context
+
+//:### 😎Inferring Type From Context
 var reversedNames2 = names.sorted(by: { s1, s2 in return s1 > s2 } )
 
 //:### Implicit Returns from Single-Expression Closures
 //single-expression closures can omit the return keyword
 var reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
 
-//:### Shorthand Argument Names
+//:### 😎Shorthand Argument Names
 
 //swift automatically provides shorthand argument names to inline closures
 reversedNames = names.sorted(by: { $0 > $1 } )
 
-//:### Operator Methods
+//:### 😎Operator Methods
 
 reversedNames = names.sorted(by: >)
 
-//:## Trailing Closures
+//:## 😎Trailing Closures
 
 func someFunctionThatTakesAClosure(closure: () -> Void) {
     // function body goes here
@@ -88,7 +90,7 @@ let strings = numbers.map { (number) -> String in
 // strings is inferred to be of type [String]
 // its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
-//:## Capturing Values and Making Them Persistent
+//:## 😎Capturing Values and Making Them Persistent (nested closures)
 
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
     var runningTotal = 0
@@ -103,7 +105,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
     return incrementer
 }
 /*:
- A nested function can capture any of its outer function’s arguments and can also capture any constants and variables defined within the outer function.
+ A nested function can capture any of its outer function’s arguments and can also capture any constants and variables defined within the outer function. (lexical scope)
  
  It does this by capturing a reference to runningTotal and amount from the surrounding function and using them within its own function body. Capturing by reference ensures that runningTotal and amount do not disappear when the call to makeIncrementer ends, and also ensures that runningTotal is available the next time the incrementer function is called.
 */
@@ -111,7 +113,7 @@ let incrementByTwo = makeIncrementer(forIncrement: 2)
 print(incrementByTwo())
 print(incrementByTwo())
 
-//:## Closures Are Reference Types
+//:## 😎Closures Are Reference Types
 
 let alsoIncrementByTen = incrementByTwo
 alsoIncrementByTen()
@@ -121,7 +123,7 @@ incrementByTwo()
 // returns a value of 8
 
 
-//:## Escaping Closures
+//:## 😎Escaping Closures
 
 /*:
  A closure is said to escape a function when the closure is passed as an argument
@@ -160,7 +162,7 @@ completionHandlers.first?()
 print(instance.x)
 // Prints "100"
 
-//:## Autoclosures
+//:## 😎Autoclosures
 
 /*:
  An autoclosure is a closure that is automatically created to wrap an expression that’s being passed as an argument to a function. It doesn’t take any arguments, and when it’s called, it returns the value of the expression that’s wrapped inside of it. This syntactic convenience lets you omit braces around a function’s parameter by writing a normal expression instead of an explicit closure.
@@ -213,3 +215,45 @@ for customerProvider in customerProviders {
 }
 // Prints "Now serving Barry!"
 // Prints "Now serving Daniella!"
+
+
+//:# 😎Extra
+
+//:### 😎Retrun Closure Indirectly
+
+var multiplyWithClosures = { (number1: Int, number2: Int) in
+    return number1 * number2
+}
+
+func returnTheClosure() -> (Int,Int) -> Int {
+    return multiplyWithClosures
+}
+//calling the above function will return the function signature and can't pass
+//parameters until you assign it to another variable, then it sees the returned
+//function that needs parameters
+let myReturnedClosure = returnTheClosure()
+myReturnedClosure(5,5)
+
+//:### 😎Return Closure Directly
+
+func returnMyClosureDirectly() -> (Int,Int) -> Int {
+    return {(num1, num2) -> Int in
+        //remember one expresion doen't need a return, its inferred (now arrow needed)
+        //(no type needed)
+        //swift automatically provides shorthand argument names to inline closures
+        //(no parameter names needed)(no parenthesis needed)
+        //see function below
+        //swift automatically infers the type of the incoming arguments
+        //swift automatically infers the return type
+        return num1 * num2
+    }
+}
+
+//
+//: Or
+/*:
+ func returnMyClosureDirectly() -> (Int,Int) -> Int {
+ return {$0 * $1}
+ }
+ */
+
