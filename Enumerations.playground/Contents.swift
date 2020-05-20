@@ -1,7 +1,7 @@
 import UIKit
 import Foundation
 //:# Enumerations
-
+//enums are value types
 //:## 😎Syntax
 enum PrimaryColor {
     //enumeration cases
@@ -65,7 +65,7 @@ var productBarcode = Barcode.upc(8, 35595, 38228, 3)
 //productBarcode can only hold upc or qrCode, one at a time for a given variable
 
 switch productBarcode {
-case .upc(let numberSystem, let manufacturer, let productBarcode,let check):
+case let .upc(numberSystem, manufacturer, productBarcode, check):
     print("UPC: \(numberSystem), \(manufacturer), \(productBarcode), \(check)")
 case .qrCode(let productCode):
     print("QR code: \(productCode)")
@@ -148,3 +148,7 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
         return evaluate(left) * evaluate(right)
     }
 }
+
+//:# Extra
+
+
