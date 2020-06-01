@@ -136,4 +136,96 @@ ovenLight.next()
 
 
 //:## Type Methods
+/*:
+ Instance methods are methods that you call on an instance of a particular type.
+ 
+ You can also define methods that are called on the type itself. These kinds of methods
+ are called type methods
+ 
+ You indicate type methods by writing the static keyword before the method’s func keyword
+ 
+ Classes can use the class keyword instead, to allow subclasses to override the superclass’s implementation of that method.
+ */
+class SomeClass {
+    static func someTypeMethod() {
+        // type method implementation goes here
+    }
+    // this function you can override
+    class func someOtherTypeMethod() {
+        // implementation goes here
+    }
+}
+SomeClass.someTypeMethod()
 
+SomeClass.someOtherTypeMethod()
+
+class SomeClass2: SomeClass {
+//    override static func someTypeMethod(){
+//        not possible to override
+//    }
+    override class func someOtherTypeMethod() {
+        
+    }
+}
+
+
+
+struct LevelTracker {
+    static var highestUnlockedLevel = 1
+    var currentLevel = 1
+
+    static func unlock(_ level: Int) {
+        if level > highestUnlockedLevel { highestUnlockedLevel = level }
+    }
+
+    static func isUnlocked(_ level: Int) -> Bool {
+        return level <= highestUnlockedLevel
+    }
+/*:
+     Because it’s not necessarily a mistake for code that calls the advance(to:) method to ignore the return value, this function is marked with the @discardableResult attribute
+     */
+    @discardableResult
+    mutating func advance(to level: Int) -> Bool {
+        if LevelTracker.isUnlocked(level) {
+            currentLevel = level
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+class Player {
+    var tracker = LevelTracker()
+    let playerName: String
+    func complete(level: Int) {
+        LevelTracker.unlock(level + 1)
+        tracker.advance(to: level + 1)
+    }
+    init(name: String) {
+        playerName = name
+    }
+}
+
+/*:
+ You can create an instance of the Player class for a new player, and see what happens when the player completes level one:
+*/
+
+var player = Player(name: "Argyrios")
+player.complete(level: 1)
+print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+// Prints "highest unlocked level is now 2"
+
+/*:
+ 
+ If you create a second player, whom you try to move to a level that is not yet unlocked by any player in the game, the attempt to set the player’s current level fails:
+*/
+
+player = Player(name: "Beto")
+if player.tracker.advance(to: 6) {
+    print("player is now on level 6")
+} else {
+    print("level 6 has not yet been unlocked")
+}
+// Prints "level 6 has not yet been unlocked"
